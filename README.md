@@ -3,7 +3,7 @@
 
 
 # Clone the repository
-git clone https://github.com/sboakye-yiadom/e-lightgbm-mobile-money-fraud-ghana.git
+git clone https://github.com/Dude-dev1/e-lightgbm-mobile-money-fraud-ghana.git
 cd e-lightgbm-mobile-money-fraud-ghana
 
 # Install dependencies
