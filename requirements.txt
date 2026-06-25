@@ -1,1 +1,74 @@
+# ============================================================
+# requirements.txt — E-LightGBM Mobile Money Fraud Detection
+# Project    : An Engineered LightGBM-SHAP Model for Mobile
+#              Money Fraud Detection in Ghana: A Focal-Loss Approach
+# Researcher : Stephen Boakye-Yiadom (21014495)
+# Supervisor : Dr. Eric Opoku Osei
+# Department : Computer Science, KNUST
+# Environment: Google Colab Pro (Python 3.10, NVIDIA A100/T4)
+# Seed        : 42 (fixed in Python, NumPy, LightGBM, XGBoost)
+# Usage       : pip install -r requirements.txt
+# ============================================================
 
+# ── Core runtime ──────────────────────────────────────────────
+python-dotenv>=1.0.0            # environment variable management
+
+# ── Data handling & preprocessing ─────────────────────────────
+numpy>=1.24.0,<2.0.0            # numerical arrays; <2.0 for LightGBM compatibility
+pandas>=2.0.0                   # DataFrames, CSV/Parquet I/O
+scipy>=1.11.0                   # Wilcoxon signed-rank test (scipy.stats.wilcoxon)
+pyarrow>=14.0.0                 # Parquet read/write for large transaction logs
+
+# ── Machine learning — primary model ──────────────────────────
+lightgbm>=4.0.0                 # E-LightGBM: focal-loss custom objective (pure Python callback)
+
+# ── Machine learning — baselines ──────────────────────────────
+xgboost>=2.0.0                  # Baseline 2: XGBoost with log-loss (Chen & Guestrin, 2016)
+scikit-learn>=1.3.0             # Baseline 3: LogisticRegression (Bhattacharyya et al., 2011)
+                                # Also provides: StratifiedKFold, train_test_split,
+                                #   f1_score, roc_auc_score, average_precision_score,
+                                #   confusion_matrix, calibration_curve
+
+# ── Class imbalance — fallback only ───────────────────────────
+imbalanced-learn>=0.11.0        # SMOTE: fallback sensitivity check only;
+                                # NOT applied to the main E-LightGBM pipeline
+
+# ── Explainability ────────────────────────────────────────────
+shap>=0.42.0                    # SHAP summary plots, force plots, TreeExplainer
+                                # (Lundberg & Lee, 2017)
+
+# ── Visualisation ─────────────────────────────────────────────
+matplotlib>=3.7.0               # ROC curves, calibration plots, confusion matrices
+seaborn>=0.12.0                 # Heatmaps, distribution plots
+plotly>=5.18.0                  # Interactive SHAP / feature-importance charts (optional)
+
+# ── Statistical testing ───────────────────────────────────────
+# scipy (listed above) covers scipy.stats.wilcoxon for 5-fold CV significance test
+
+# ── Notebook & experiment environment ─────────────────────────
+jupyterlab>=4.0.0               # Notebook environment (Colab uses its own; local fallback)
+ipywidgets>=8.0.0               # Interactive widgets in Jupyter
+tqdm>=4.66.0                    # Progress bars during model training
+
+# ── Reproducibility & serialisation ──────────────────────────
+joblib>=1.3.0                   # Model serialisation and parallel preprocessing
+cloudpickle>=3.0.0              # Checkpoint serialisation between boosting rounds
+
+# ── Reporting & utilities ─────────────────────────────────────
+openpyxl>=3.1.0                 # Excel I/O for result tables
+xlsxwriter>=3.1.0               # Formatted Excel output for comparison tables
+
+# ============================================================
+# PINNING NOTES
+# ── After installation, run:
+#      pip freeze > requirements_pinned.txt
+#    to capture exact resolved versions for full reproducibility.
+# ── Google Colab Pro pre-installs numpy, pandas, matplotlib,
+#    scipy, and scikit-learn; explicit pins here override defaults.
+# ── The focal-loss custom objective for E-LightGBM requires no
+#    additional dependency beyond lightgbm>=4.0.0 — it is
+#    implemented as a pure Python gradient/hessian callback
+#    in src/focal_loss.py.
+# ── numpy is capped at <2.0 to maintain compatibility with
+#    lightgbm>=4.0.0 C extensions on Colab's CUDA environment.
+# ============================================================
